@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TICs  - Empodera tu Futuro en Tecnología</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Modal para Registro -->
+    <div id="registroModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¡Regístrate y Únete!</h2>
+            <form id="registroForm">
+                <div class="form-group">
+                    <label for="nombre"><i class="fas fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="edad"><i class="fas fa-calendar"></i> Edad</label>
+                    <input type="number" id="edad" min="16" max="100" required>
+                </div>
+                <button type="submit">Registrarse</button>
+            </form>
+            <p>Al registrarte, accede a cursos exclusivos, comunidad y más. ¡Es gratis!</p>
+        </div>
+    </div>
+
+    <!-- Modal para Inicio de Sesión -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>¡Bienvenida de Vuelta!</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="loginEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword"><i class="fas fa-lock"></i> Contraseña</label>
+                    <input type="password" id="loginPassword" required>
+                </div>
+                <button type="submit">Iniciar Sesión</button>
+            </form>
+            <p><a href="#" onclick="document.getElementById('registroModal').style.display='block'">¿No tienes cuenta? Regístrate aquí.</a></p>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <div class="container">
+                <div class="logo">
+                    <h1><i class="fas fa-laptop-code"></i> TICs</h1>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#cursos">Cursos</a></li>
+                    <li><a href="#guias">Guías</a></li>
+                    <li><a href="#comunidad">Comunidad</a></li>
+                    <li><a href="#eventos">Eventos</a></li>
+                    <li><button id="loginBtn" onclick="openLogin()">Iniciar Sesión</button></li>
+                    <li><button id="registroBtn" onclick="openRegistro()">Registrarse</button></li>
+                </ul>
+                <div class="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <section id="inicio" class="hero">
+        <div class="container">
+            <h2>¡Descubre tu Poder en las TICs!</h2>
+            <p>Un espacio seguro y motivador para que desarrolles habilidades en programación, robótica y diseño digital. Conecta, aprende y brilla.</p>
+            <button class="cta-btn" onclick="openRegistro()">Únete Ahora</button>
+        </div>
+    </section>
+
+    <section id="cursos" class="section">
+        <div class="container">
+            <h2>Cursos Accesibles</h2>
+            <p>Aprende a tu ritmo con talleres introductorios adaptados a todos los niveles.</p>
+            <div class="cards">
+                <div class="card">
+                    <i class="fas fa-code"></i>
+                    <h3>Programación Básica</h3>
+                    <p>Desde cero: HTML, CSS y JavaScript para crear tu primer sitio web.</p>
+                    <button class="card-btn">Inscribirse</button>
+                </div>
+                <div class="card">
+                    <i class="fas fa-robot"></i>
+                    <h3>Introducción a Robótica</h3>
+                    <p>Construye y programa robots simples con Arduino.</p>
+                    <button class="card-btn">Inscribirse</button>
+                </div>
+                <div class="card">
+                    <i class="fas fa-paint-brush"></i>
+                    <h3>Diseño Digital</h3>
+                    <p>Explora herramientas como Figma para interfaces creativas.</p>
+                    <button class="card-btn">Inscribirse</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="guias" class="section alt-bg">
+        <div class="container">
+            <h2>Guías de Mentoras</h2>
+            <p>Encuentra inspiración en charlas y recursos de mujeres líderes en tecnología.</p>
+            <div class="cards">
+                <div class="card">
+                    <img src="assets/img/cuenta-empresaria.png" alt="Mentora Ana">
+                    <h3>Ana López - Desarrolladora Senior</h3>
+                    <p>Guía: "De principiante a pro en Python".</p>
+                    <button class="card-btn">Ver Guía</button>
+                </div>
+                <div class="card">
+                    <img src="assets/img/images.jpeg" alt="Mentora María">
+                    <h3>María García - Ingeniera en IA</h3>
+                    <p>Guía: "Ética en la Robótica para Mujeres".</p>
+                    <button class="card-btn">Ver Guía</button>
+                </div>
+                <div class="card">
+                    <img src="assets/img/profe.jpeg" alt="Mentora Laura">
+                    <h3>Laura Ruiz - Diseñadora UX</h3>
+                    <p>Guía: "Diseño Inclusivo en Apps".</p>
+                    <button class="card-btn">Ver Guía</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="comunidad" class="section">
+        <div class="container">
+            <h2>Comunidad de Apoyo</h2>
+            <p>Únete a una red moderada por mentoras para resolver dudas y crecer juntas.</p>
+            <div class="features">
+                <div class="feature">
+                    <i class="fas fa-comments"></i>
+                    <h3>Foros de Discusión</h3>
+                    <p>Comparte experiencias y recibe feedback.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-users"></i>
+                    <h3>Grupos de Estudio</h3>
+                    <p>Colabora en proyectos colaborativos.</p>
+                </div>
+                <div class="feature">
+                    <i class="fas fa-handshake"></i>
+                    <h3>Mentoreo Personalizado</h3>
+                    <p>Conecta con una mentora experta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="eventos" class="section alt-bg">
+        <div class="container">
+            <h2>Eventos y Oportunidades</h2>
+            <p>Participa en charlas, galerías creativas y hackatones para innovar.</p>
+            <div class="events">
+                <div class="event-card">
+                    <h3>Charla en Vivo: Mujeres en Tech</h3>
+                    <p>Fecha: 15 Dic 2025 | Enlace: YouTube Live</p>
+                    <button class="event-btn">Unirse</button>
+                </div>
+                <div class="event-card">
+                    <h3>Hackatón Inclusivo</h3>
+                    <p>Fecha: 20-22 Ene 2026 | Forma tu equipo</p>
+                    <button class="event-btn">Inscribirse</button>
+                </div>
+                <div class="event-card">
+                    <h3>Galería de Arte Digital</h3>
+                    <p>Sube tus creaciones y vota por las mejores.</p>
+                    <button class="event-btn">Explorar</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 TICs para Ellas. Empoderando a mujeres en el mundo de las TICs. | <a href="#">Política de Privacidad</a></p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
