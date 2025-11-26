@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio de Sesión - MujeresTics</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container-login {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-header h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+            font-family: inherit;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .error-message.show {
+            display: block;
+        }
+
+        input.invalid {
+            border-color: #e74c3c;
+        }
+
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 13px;
+        }
+
+        .form-options label {
+            margin: 0;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .form-options input[type="checkbox"] {
+            margin-right: 8px;
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+
+        .form-options a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .form-options a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-login:active {
+            transform: translateY(0);
+        }
+
+        .btn-login.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: #764ba2;
+        }
+
+        .form-toggle {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 15px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            color: #999;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+            position: relative;
+            bottom: -2px;
+        }
+
+        .toggle-btn.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .toggle-btn:hover {
+            color: #667eea;
+        }
+
+        .form-container {
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            display: none;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 24px;
+            color: #667eea;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .back-button:hover {
+            background: #667eea;
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+            margin-top: 10px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0;
+            font-weight: 400;
+            font-size: 13px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+            accent-color: #667eea;
+        }
+
+        .checkbox-group span {
+            line-height: 1.4;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-button" title="Volver a la página principal">
+        <span>&larr;</span>
+    </a>
+
+    <div class="container-login">
+        <div class="login-header">
+            <h1>MujeresTics</h1>
+            <p>Inicia sesión en tu cuenta</p>
+        </div>
+
+        <div class="form-toggle">
+            <button type="button" class="toggle-btn active" id="toggleLogin">Iniciar Sesión</button>
+            <button type="button" class="toggle-btn" id="toggleRegister">Registrarse</button>
+        </div>
+
+        <div id="successMessage" class="success-message"></div>
+
+        <!-- FORMULARIO DE LOGIN -->
+        <div id="loginContainer" class="form-container active">
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label for="email">Correo Electrónico</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email" 
+                        placeholder="tu@correo.com" 
+                        required
+                    >
+                    <div class="error-message" id="emailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password" 
+                        placeholder="••••••••" 
+                        required
+                    >
+                    <div class="error-message" id="passwordError"></div>
+                </div>
+
+                <div class="form-options">
+                    <label>
+                        <input type="checkbox" name="remember" id="remember">
+                        Recuérdame
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-login" id="loginBtn">Iniciar Sesión</button>
+            </form>
+        </div>
+
+        <!-- FORMULARIO DE REGISTRO -->
+        <div id="registerContainer" class="form-container">
+            <form id="registerForm" novalidate>
+                <div class="form-group">
+                    <label for="regName">Nombre Completo</label>
+                    <input 
+                        type="text" 
+                        id="regName" 
+                        name="name" 
+                        placeholder="Tu nombre" 
+                        required
+                    >
+                    <div class="error-message" id="nameError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regEmail">Correo Electrónico</label>
+                    <input 
+                        type="email" 
+                        id="regEmail" 
+                        name="email" 
+                        placeholder="tu@correo.com" 
+                        required
+                    >
+                    <div class="error-message" id="regEmailError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPassword">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="regPassword" 
+                        name="password" 
+                        placeholder="••••••••" 
+                        required
+                    >
+                    <div class="error-message" id="regPasswordError"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="regPasswordConfirm">Verificar Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="regPasswordConfirm" 
+                        name="passwordConfirm" 
+                        placeholder="••••••••" 
+                        required
+                    >
+                    <div class="error-message" id="regPasswordConfirmError"></div>
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label for="regNewsletter">
+                        <input 
+                            type="checkbox" 
+                            id="regNewsletter" 
+                            name="newsletter"
+                        >
+                        <span>Acepto recibir correos con información de cursos, avisos y actualizaciones</span>
+                    </label>
+                </div>
+
+                <button type="submit" class="btn-login" id="registerBtn">Registrarse</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ===== DETECTAR PARÁMETRO DE URL =====
+        function getUrlParameter(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // ===== ELEMENTOS DEL DOM =====
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const loginContainer = document.getElementById('loginContainer');
+        const registerContainer = document.getElementById('registerContainer');
+        const toggleLogin = document.getElementById('toggleLogin');
+        const toggleRegister = document.getElementById('toggleRegister');
+        const successMessage = document.getElementById('successMessage');
+
+        // ===== ELEMENTOS DE LOGIN =====
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+        const emailError = document.getElementById('emailError');
+        const passwordError = document.getElementById('passwordError');
+        const loginBtn = document.getElementById('loginBtn');
+
+        // ===== ELEMENTOS DE REGISTRO =====
+        const regNameInput = document.getElementById('regName');
+        const regEmailInput = document.getElementById('regEmail');
+        const regPasswordInput = document.getElementById('regPassword');
+        const regPasswordConfirmInput = document.getElementById('regPasswordConfirm');
+        const nameError = document.getElementById('nameError');
+        const regEmailError = document.getElementById('regEmailError');
+        const regPasswordError = document.getElementById('regPasswordError');
+        const regPasswordConfirmError = document.getElementById('regPasswordConfirmError');
+        const regNewsletterInput = document.getElementById('regNewsletter');
+        const registerBtn = document.getElementById('registerBtn');
+
+        // ===== FUNCIONES DE VALIDACIÓN =====
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        function validateName(name) {
+            return name.trim().length >= 3;
+        }
+
+        function showError(input, errorElement, message) {
+            input.classList.add('invalid');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+        }
+
+        function clearError(input, errorElement) {
+            input.classList.remove('invalid');
+            errorElement.textContent = '';
+            errorElement.classList.remove('show');
+        }
+
+        // ===== TOGGLE ENTRE FORMULARIOS =====
+        toggleLogin.addEventListener('click', () => {
+            loginContainer.classList.add('active');
+            registerContainer.classList.remove('active');
+            toggleLogin.classList.add('active');
+            toggleRegister.classList.remove('active');
+            successMessage.classList.remove('show');
+            loginForm.reset();
+            registerForm.reset();
+        });
+
+        toggleRegister.addEventListener('click', () => {
+            registerContainer.classList.add('active');
+            loginContainer.classList.remove('active');
+            toggleRegister.classList.add('active');
+            toggleLogin.classList.remove('active');
+            successMessage.classList.remove('show');
+            loginForm.reset();
+            registerForm.reset();
+        });
+
+        // ===== MOSTRAR FORMULARIO CORRECTO SEGÚN URL =====
+        window.addEventListener('load', () => {
+            const tab = getUrlParameter('tab');
+            if (tab === 'register') {
+                toggleRegister.click();
+            }
+        });
+
+        // ===== VALIDACIÓN EN TIEMPO REAL - LOGIN =====
+        emailInput.addEventListener('blur', () => {
+            if (emailInput.value.trim()) {
+                if (!validateEmail(emailInput.value)) {
+                    showError(emailInput, emailError, 'Por favor ingresa un correo válido');
+                } else {
+                    clearError(emailInput, emailError);
+                }
+            }
+        });
+
+        passwordInput.addEventListener('blur', () => {
+            if (passwordInput.value.trim()) {
+                if (!validatePassword(passwordInput.value)) {
+                    showError(passwordInput, passwordError, 'La contraseña debe tener al menos 6 caracteres');
+                } else {
+                    clearError(passwordInput, passwordError);
+                }
+            }
+        });
+
+        emailInput.addEventListener('input', () => {
+            if (emailInput.value.trim()) {
+                clearError(emailInput, emailError);
+            }
+        });
+
+        passwordInput.addEventListener('input', () => {
+            if (passwordInput.value.trim()) {
+                clearError(passwordInput, passwordError);
+            }
+        });
+
+        // ===== VALIDACIÓN EN TIEMPO REAL - REGISTRO =====
+        regNameInput.addEventListener('blur', () => {
+            if (regNameInput.value.trim()) {
+                if (!validateName(regNameInput.value)) {
+                    showError(regNameInput, nameError, 'El nombre debe tener al menos 3 caracteres');
+                } else {
+                    clearError(regNameInput, nameError);
+                }
+            }
+        });
+
+        regEmailInput.addEventListener('blur', () => {
+            if (regEmailInput.value.trim()) {
+                if (!validateEmail(regEmailInput.value)) {
+                    showError(regEmailInput, regEmailError, 'Por favor ingresa un correo válido');
+                } else {
+                    clearError(regEmailInput, regEmailError);
+                }
+            }
+        });
+
+        regPasswordInput.addEventListener('blur', () => {
+            if (regPasswordInput.value.trim()) {
+                if (!validatePassword(regPasswordInput.value)) {
+                    showError(regPasswordInput, regPasswordError, 'La contraseña debe tener al menos 6 caracteres');
+                } else {
+                    clearError(regPasswordInput, regPasswordError);
+                    // Verificar también la confirmación si tiene contenido
+                    if (regPasswordConfirmInput.value.trim()) {
+                        validarPasswordsCoinciden();
+                    }
+                }
+            }
+        });
+
+        regPasswordConfirmInput.addEventListener('blur', () => {
+            if (regPasswordConfirmInput.value.trim()) {
+                validarPasswordsCoinciden();
+            }
+        });
+
+        regNameInput.addEventListener('input', () => {
+            if (regNameInput.value.trim()) {
+                clearError(regNameInput, nameError);
+            }
+        });
+
+        regEmailInput.addEventListener('input', () => {
+            if (regEmailInput.value.trim()) {
+                clearError(regEmailInput, regEmailError);
+            }
+        });
+
+        regPasswordInput.addEventListener('input', () => {
+            if (regPasswordInput.value.trim()) {
+                clearError(regPasswordInput, regPasswordError);
+            }
+        });
+
+        regPasswordConfirmInput.addEventListener('input', () => {
+            if (regPasswordConfirmInput.value.trim()) {
+                clearError(regPasswordConfirmInput, regPasswordConfirmError);
+            }
+        });
+
+        function validarPasswordsCoinciden() {
+            if (regPasswordInput.value !== regPasswordConfirmInput.value) {
+                showError(regPasswordConfirmInput, regPasswordConfirmError, 'Las contraseñas no coinciden');
+                return false;
+            } else {
+                clearError(regPasswordConfirmInput, regPasswordConfirmError);
+                return true;
+            }
+        }
+
+        // ===== MANEJO DEL FORMULARIO DE LOGIN =====
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let isValid = true;
+            const email = emailInput.value.trim();
+            const password = passwordInput.value.trim();
+
+            if (!email) {
+                showError(emailInput, emailError, 'Por favor ingresa tu correo');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError(emailInput, emailError, 'Por favor ingresa un correo válido');
+                isValid = false;
+            } else {
+                clearError(emailInput, emailError);
+            }
+
+            if (!password) {
+                showError(passwordInput, passwordError, 'Por favor ingresa tu contraseña');
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                showError(passwordInput, passwordError, 'La contraseña debe tener al menos 6 caracteres');
+                isValid = false;
+            } else {
+                clearError(passwordInput, passwordError);
+            }
+
+            if (isValid) {
+                loginBtn.classList.add('loading');
+                loginBtn.disabled = true;
+                loginBtn.textContent = 'Iniciando sesión...';
+
+                setTimeout(() => {
+                    // Buscar el usuario en localStorage
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const user = users.find(u => u.email === email);
+                    
+                    if (user && user.password === password) {
+                        // Guardar sesión actual
+                        localStorage.setItem('currentUser', JSON.stringify({
+                            name: user.name,
+                            email: user.email,
+                            newsletter: user.newsletter || false
+                        }));
+                        
+                        successMessage.textContent = '¡Inicio de sesión exitoso! Redirigiendo...';
+                        successMessage.classList.add('show');
+                        
+                        loginForm.reset();
+                        
+                        // Redirigir a index después de 0.3 segundos
+                        setTimeout(() => {
+                            window.location.href = 'index.html';
+                        }, 300);
+                    } else {
+                        showError(emailInput, emailError, 'Correo o contraseña incorrectos');
+                        loginBtn.classList.remove('loading');
+                        loginBtn.disabled = false;
+                        loginBtn.textContent = 'Iniciar Sesión';
+                    }
+                }, 100);
+            }
+        });
+
+        // ===== MANEJO DEL FORMULARIO DE REGISTRO =====
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            let isValid = true;
+            const name = regNameInput.value.trim();
+            const email = regEmailInput.value.trim();
+            const password = regPasswordInput.value.trim();
+            const passwordConfirm = regPasswordConfirmInput.value.trim();
+
+            // Validar nombre
+            if (!name) {
+                showError(regNameInput, nameError, 'Por favor ingresa tu nombre');
+                isValid = false;
+            } else if (!validateName(name)) {
+                showError(regNameInput, nameError, 'El nombre debe tener al menos 3 caracteres');
+                isValid = false;
+            } else {
+                clearError(regNameInput, nameError);
+            }
+
+            // Validar email
+            if (!email) {
+                showError(regEmailInput, regEmailError, 'Por favor ingresa tu correo');
+                isValid = false;
+            } else if (!validateEmail(email)) {
+                showError(regEmailInput, regEmailError, 'Por favor ingresa un correo válido');
+                isValid = false;
+            } else {
+                clearError(regEmailInput, regEmailError);
+            }
+
+            // Validar contraseña
+            if (!password) {
+                showError(regPasswordInput, regPasswordError, 'Por favor ingresa una contraseña');
+                isValid = false;
+            } else if (!validatePassword(password)) {
+                showError(regPasswordInput, regPasswordError, 'La contraseña debe tener al menos 6 caracteres');
+                isValid = false;
+            } else {
+                clearError(regPasswordInput, regPasswordError);
+            }
+
+            // Validar confirmación de contraseña
+            if (!passwordConfirm) {
+                showError(regPasswordConfirmInput, regPasswordConfirmError, 'Por favor confirma tu contraseña');
+                isValid = false;
+            } else if (password !== passwordConfirm) {
+                showError(regPasswordConfirmInput, regPasswordConfirmError, 'Las contraseñas no coinciden');
+                isValid = false;
+            } else {
+                clearError(regPasswordConfirmInput, regPasswordConfirmError);
+            }
+
+            if (isValid) {
+                registerBtn.classList.add('loading');
+                registerBtn.disabled = true;
+                registerBtn.textContent = 'Registrando...';
+
+                setTimeout(() => {
+                    // Guardar el nuevo usuario en localStorage
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    
+                    // Verificar si el email ya existe
+                    if (users.find(u => u.email === email)) {
+                        showError(regEmailInput, regEmailError, 'Este correo ya está registrado');
+                        registerBtn.classList.remove('loading');
+                        registerBtn.disabled = false;
+                        registerBtn.textContent = 'Registrarse';
+                    } else {
+                        // Agregar nuevo usuario
+                        users.push({
+                            name: name,
+                            email: email,
+                            password: password,
+                            newsletter: regNewsletterInput.checked
+                        });
+                        localStorage.setItem('users', JSON.stringify(users));
+                        
+                        // Guardar sesión actual
+                        localStorage.setItem('currentUser', JSON.stringify({
+                            name: name,
+                            email: email,
+                            newsletter: regNewsletterInput.checked
+                        }));
+                        
+                        successMessage.textContent = '¡Registro exitoso! Redirigiendo a iniciar sesión...';
+                        successMessage.classList.add('show');
+                        
+                        registerForm.reset();
+                        
+                        // Redirigir a login después de 0.3 segundos
+                        setTimeout(() => {
+                            toggleLogin.click();
+                            successMessage.classList.remove('show');
+                        }, 300);
+                    }
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>
