@@ -290,7 +290,7 @@
     <div class="container-login">
         <div class="login-header">
             <h1>MujeresTics</h1>
-            <p>Inicia sesión en tu cuenta</p>
+            <p id="headerSubtitle">Inicia sesión en tu cuenta</p>
         </div>
 
         <div class="form-toggle">
@@ -475,6 +475,9 @@
             successMessage.classList.remove('show');
             loginForm.reset();
             registerForm.reset();
+            // actualizar texto del header para login
+            const headerSubtitle = document.getElementById('headerSubtitle');
+            if (headerSubtitle) headerSubtitle.textContent = 'Inicia sesión en tu cuenta';
         });
 
         toggleRegister.addEventListener('click', () => {
@@ -485,6 +488,9 @@
             successMessage.classList.remove('show');
             loginForm.reset();
             registerForm.reset();
+            // actualizar texto del header para registro
+            const headerSubtitle = document.getElementById('headerSubtitle');
+            if (headerSubtitle) headerSubtitle.textContent = 'Crea tu cuenta';
         });
 
         // ===== MOSTRAR FORMULARIO CORRECTO SEGÚN URL =====
